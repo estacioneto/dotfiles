@@ -1,0 +1,79 @@
+[core]
+  packedGitLimit = 256m
+  packedGitWindowSize = 256m
+  editor = nvim
+
+[pack]
+  deltaCacheSize = 256m
+  packSizeLimit = 256m
+  windowMemory = 256m
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = red
+[alias]
+  pushf = push --force-with-lease
+  clear = checkout -- .
+  cc = checkout -b
+  cm = commit -a -m
+  cma = commit -a --amend --no-edit
+  co = checkout
+  st = status
+  di = diff --color-words
+  rc = rebase --continue
+  rs = rebase --skip
+  ra = rebase --abort
+  revall = reset --hard HEAD~
+  lg = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  la = "!git config -l | grep alias | cut -c 7-"
+  lt = describe --tags --abbrev=0
+  sync = !git tag -l | xargs git tag -d && git fetch -t
+  preparepr = "!f() { BRANCH=$(git rev-parse --abbrev-ref HEAD);git checkout master; git fetch && git rebase; git checkout \"$BRANCH\";git rebase master; }; f"
+  updatepr = "!f() { BRANCH=$(git rev-parse --abbrev-ref HEAD);git push --set-upstream origin -f \"$BRANCH\":\"$BRANCH\";}; f"
+  openpr = "!f() { ORG=$(git remote get-url origin | cut -d ":" -f2 | cut -d "/" -f1);BRANCH=$(git rev-parse --abbrev-ref HEAD); REPO=$(git ls-remote --get-url |cut -d / -f2) ;git push --set-upstream origin -f \"$BRANCH\":\"$BRANCH\"; echo -e \"https://github.com/$ORG/$REPO/compare/$BRANCH?expand=1\";}; f"
+
+  in = "!f() { BRANCH=$(git rev-parse --abbrev-ref HEAD);git fetch && git log ..origin/\"$BRANCH\"; }; f"
+  out = "!f() { BRANCH=$(git rev-parse --abbrev-ref HEAD);git fetch && git whatchanged origin/\"$BRANCH\"..; }; f"
+  prunebranches = "!git fetch --prune && git branch --merged | egrep -v 'master|dev|main|staging|\\*'  | xargs git branch -d"
+
+[pull]
+  rebase = true
+[branch]
+  autosetuprebase = always
+[branch "master"]
+  rebase = true
+[merge]
+  tool = vimdiff
+  rebase = true
+[mergetool]
+  prompt = true
+[mergetool "vimdiff"]
+  ; cmd = nvim -d $LOCAL $MERGED $REMOTE
+  cmd = nvim -c DiffviewOpen
+[difftool]
+  prompt = false
+[diff]
+  tool = vimdiff
+[url "git@github.com:estacioneto/"]
+  insteadOf = estacio:
+
+[credential]
+  helper = store
+[user]
+  name = Estacio Pereira
+  email = estacio.pereira@gmail.com
