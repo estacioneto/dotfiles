@@ -5,7 +5,7 @@ if which fzf &> /dev/null; then
 fi
 
 [ -f ~/.iterm2_shell_integration.zsh ] && source ~/.iterm2_shell_integration.zsh
-[ -f ~/.docker-fzf-completion/docker-fzf.zsh ] && source ~/.docker-fzf-completion/docker-fzf.zsh
+[ -f ~/.dotfiles/fzf/setup_completions.zsh ] && source ~/.dotfiles/fzf/setup_completions.zsh
 
 AUTO_SUGGESTIONS=/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f $AUTO_SUGGESTIONS ] && source $AUTO_SUGGESTIONS
@@ -41,7 +41,8 @@ fy () {
     return
   fi
 
-  yarn run "$selected"
+  # Replace the current command line with the yarn run command
+  print -z "yarn run $selected"
 }
 
 # Perform cd on subdirectories

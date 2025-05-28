@@ -38,3 +38,9 @@ export LANG=en_US.UTF-8
 source ~/.zprofile
 
 eval "$('/opt/homebrew/bin/brew' shellenv)"
+
+if [[ -f ~/.api_keys.zsh ]]; then
+  source ~/.api_keys.zsh
+fi
+
+source ~/.keprc
