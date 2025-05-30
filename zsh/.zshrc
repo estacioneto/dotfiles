@@ -43,6 +43,13 @@ if [[ -f ~/.api_keys.zsh ]]; then
   source ~/.api_keys.zsh
 fi
 
+# Golang
+alias air=$(go env GOPATH)/bin/air
+alias arelo=$(go env GOPATH)/bin/arelo
+
+# While plist logic doesn't work, run it when opening the terminal
+# /bin/zsh /Users/estacio/.dotfiles/LaunchDaemons/scripts/remapkeys.sh
+
 source ~/.keprc
 
 export PATH=$HOME/.local/bin:$PATH

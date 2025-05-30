@@ -16,6 +16,8 @@ sh "$current_dir"/zsh/setup.sh
 echo
 sh "$current_dir"/tmux/setup.sh
 echo
+sh "$current_dir"/docker/setup.sh
+echo
 
 if ! which node &> /dev/null; then
   echo "💿 Installing Node.js (https://nodejs.org/en)..."
