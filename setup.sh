@@ -43,3 +43,4 @@ fi
 echo
 
 sh "$current_dir"/neovim/setup.sh
+sh "$current_dir"/docker/setup.sh

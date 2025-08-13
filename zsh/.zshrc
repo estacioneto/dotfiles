@@ -44,3 +44,5 @@ if [[ -f ~/.api_keys.zsh ]]; then
 fi
 
 source ~/.keprc
+
+export PATH=$HOME/.local/bin:$PATH
