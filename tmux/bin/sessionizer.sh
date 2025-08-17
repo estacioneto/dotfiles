@@ -65,7 +65,7 @@ current_working_dir=$([ -n "$tmux_enabled" ] && tmux display-message -p -F "#{pa
 # In case of git dirs, use fd to find all git dirs
 if [[ $git_dirs ]]; then
   selected=$(
-    fd -t d -d 3 --no-ignore --hidden "${exclude_dirs_patterns[*]}" .git ~/ |
+    fd -t d -d 3 --no-ignore --hidden "${exclude_dirs_patterns[*]}" .git$ ~/ |
       xargs -I {} dirname {} | $fzf_command
   )
 elif [[ $root_dirs ]]; then
