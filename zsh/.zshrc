@@ -48,8 +48,14 @@ alias air=$(go env GOPATH)/bin/air
 alias arelo=$(go env GOPATH)/bin/arelo
 
 # While plist logic doesn't work, run it when opening the terminal
-# /bin/zsh /Users/estacio/.dotfiles/LaunchDaemons/scripts/remapkeys.sh
+REMAP_KEYS_SCRIPT_PATH='~/.dotfiles/LaunchDaemons/scripts/remapkeys.sh'
+if [[ -f $REMAP_KEYS_SCRIPT_PATH ]]; then
+  source $REMAP_KEYS_SCRIPT_PATH
+fi
 
 source ~/.keprc
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 export PATH=$HOME/.local/bin:$PATH
