@@ -6,6 +6,7 @@ current_dir=$(dirname -- "$(readlink -f "$0")")
 if [ ! -e "$HOME"/.zshrc ]; then
   echo "🔗 Linking .zshrc..."
   ln -s "$current_dir"/.zshrc "$HOME"/.zshrc && echo "✅ .zshrc linked" || exit 1
+  source "$HOME"/.zshrc
 else
   echo "⏭️  .zshrc already exists!"
 fi

@@ -2,11 +2,10 @@
 
 if [ -d "$HOME"/.vim/lua/estacio ]; then
   echo "⏭️  Neovim already setup!"
-  exit 0
+else
+  echo "💿 Fetching Neovim config..."
+  git clone git@github.com:estacioneto/dotvim "$HOME"/.vim && echo "✅ Neovim config fetched" || exit 1
 fi
-
-echo "💿 Fetching Neovim config..."
-git clone git@github.com:estacioneto/dotvim "$HOME"/.vim && echo "✅ Neovim config fetched" || exit 1
 
 echo
 

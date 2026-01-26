@@ -44,8 +44,10 @@ if [[ -f ~/.api_keys.zsh ]]; then
 fi
 
 # Golang
-alias air=$(go env GOPATH)/bin/air
-alias arelo=$(go env GOPATH)/bin/arelo
+if which go &> /dev/null; then
+  alias air=$(go env GOPATH)/bin/air
+  alias arelo=$(go env GOPATH)/bin/arelo
+fi
 
 # While plist logic doesn't work, run it when opening the terminal
 REMAP_KEYS_SCRIPT_PATH="$HOME/.dotfiles/LaunchDaemons/scripts/remapkeys.sh"
@@ -55,6 +57,13 @@ fi
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
+
+if [[ -d ~/$HOME/.n ]]; then
+  mkdir $HOME/.n
+fi
+
+export N_PREFIX=$HOME/.n
+export PATH=$N_PREFIX/bin:$PATH
 
 export PATH=$HOME/.local/bin:$PATH
 
