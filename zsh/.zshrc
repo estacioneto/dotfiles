@@ -1,5 +1,8 @@
-# autoload -Uz compinit && compinit
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
+# autoload -Uz compinit && compinit
 calendar_info() {
   echo "%F{225}{ %D{%a %b %d %H:%M} }%f"
 }
@@ -43,6 +46,14 @@ if [[ -f ~/.api_keys.zsh ]]; then
   source ~/.api_keys.zsh
 fi
 
+# Somehow with the new change of setting powerlevel10k, `readlink -f "$0"` doesn't work as expected on startup.
+# $0 apparently equals to '-zsh' instead of the actual script file path. Don't want to investigate why, so...
+enterprise_dir=$(fd --base-directory $HOME -t d -d 2 -I -H .enterprise)
+if [[ ! -z "$enterprise_dir" && -f "$HOME"/"$enterprise_dir"/.zshrc ]]; then
+  source "$HOME"/"$enterprise_dir"/.zshrc
+fi
+
+
 # Golang
 if which go &> /dev/null; then
   alias air=$(go env GOPATH)/bin/air
@@ -63,10 +74,12 @@ if [[ -d ~/$HOME/.n ]]; then
 fi
 
 export N_PREFIX=$HOME/.n
-export PATH=$N_PREFIX/bin:$PATH
-
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$N_PREFIX/bin:$HOME/.local/bin:$(brew --prefix)/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

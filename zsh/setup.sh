@@ -6,9 +6,16 @@ current_dir=$(dirname -- "$(readlink -f "$0")")
 if [ ! -e "$HOME"/.zshrc ]; then
   echo "🔗 Linking .zshrc..."
   ln -s "$current_dir"/.zshrc "$HOME"/.zshrc && echo "✅ .zshrc linked" || exit 1
-  source "$HOME"/.zshrc
 else
   echo "⏭️  .zshrc already exists!"
+fi
+
+
+if [ ! -e "$HOME"/.p10k.zsh ]; then
+  echo "🔗 Linking .p10k.zsh..."
+  ln -s "$current_dir"/.p10k.zsh "$HOME"/.p10k.zsh && echo "✅ .p10k.zsh linked" || exit 1
+else
+  echo "⏭️  .p10k.zsh already exists!"
 fi
 
 echo
@@ -55,3 +62,19 @@ else
 fi
 
 echo "✨ Zsh setup complete!"
+
+if [ ! -d ~/powerlevel10k ]; then
+  echo "💿 Installing powerlevel10k (https://github.com/romkatv/powerlevel10k)..."
+
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+
+  # No need to echo 'source ~/powerlevel...' since it's already present on ~/.zshrc
+else
+  echo "⏭️  powerlevel10k already installed!"
+fi
+
+echo "⚡️ Reloading ~/.zshrc just in case..."
+
+source "$HOME"/.zshrc
+
+echo
