@@ -126,25 +126,24 @@ chain_rebase() {
   echo
 }
 
-ocp_docker() {
-  # Get the command and the ocp_session_id from the arguments
-  if [[ $# -lt 2 ]]; then
-    echo "Usage: ocp_docker COMMAND [OCP_SESSION_ID] [ARGS...]"
-    return 1
-  fi
+# Helper function to generate passwords
+gen_password() {
+  local sections=${1:-4}
+  local special_chars=("-" "&" "*" "+" "=" "@" "#" "!" "%" "^")
+  local password=""
 
-  local command="$1"
-  shift
+  for ((i = 0; i < sections; i++)); do
+    # Generate a random section using openssl
+    local section=$(openssl rand -base64 6 | tr -d '=/')
 
-  local ocp_session_id="$1"
-  shift
+    if [ $i -eq 0 ]; then
+      password="$section"
+    else
+      # Use modulo to cycle through special characters
+      local char_index=$(((i - 1) % ${#special_chars[@]}))
+      password="${password}${special_chars[$char_index]}${section}"
+    fi
+  done
 
-  # If the command is logs, add the --follow flag and pipe it into tspin
-  if [[ "$command" == "logs"  ]] && which tspin &> /dev/null; then
-    docker logs one-click-purchase-client-"$ocp_session_id" -f 2>&1 | tspin
-    return $?
-  fi
-
-  # Execute docker command
-  docker "$command" one-click-purchase-client-"$ocp_session_id" "$@"
+  echo "$password"
 }

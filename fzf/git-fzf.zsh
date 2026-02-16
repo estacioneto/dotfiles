@@ -56,13 +56,13 @@ _fzf_complete_git() {
 
   git_command=${tokens[2]}
   case "$git_command" in
-    switch|rebase|branch)
+    switch|rebase|branch|s)
       _fzf_complete "$FZF_GIT_PREVIEW_BRANCH_OPTS" "$@" < <(
         _fzf_git_list_all_branches
       )
       return
       ;;
-    checkout)
+    checkout|co)
       # In case of checkout, if -- is not present, autocomplete with branch. If it's present, autocomplete with file
 
       if [[ "${tokens[@]}" == *"--"* ]]; then
