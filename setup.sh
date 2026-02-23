@@ -22,11 +22,11 @@ echo
 if ! which node &> /dev/null; then
   echo "💿 Installing Node.js (https://nodejs.org/en)..."
 
-  if ! which n &> /dev/null; then
-    echo "💿 Installing n (https://github.com/tj/n)..."
-    brew install n && echo "✅ [Dependencies] n installed" || exit 1
+  if ! which nvm &> /dev/null; then
+    echo "💿 Installing nvm (https://github.com/nvm-sh/nvm)..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && echo "✅ [Dependencies] nvm installed" || exit 1
   else
-    echo "⏭️  n already installed!"
+    echo "⏭️  nvm already installed!"
   fi
   echo
 

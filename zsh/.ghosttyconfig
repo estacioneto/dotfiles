@@ -48,5 +48,9 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-auto-update=off
-theme=Ultra Dark
+auto-update = off
+theme = Ultra Dark
+link-url = true
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = hidden
+title = " "
