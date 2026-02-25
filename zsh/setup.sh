@@ -61,7 +61,16 @@ else
   echo "⏭️  bat already installed!"
 fi
 
-echo "✨ Zsh setup complete!"
+echo
+
+if ! brew list zsh-syntax-highlighting > /dev/null 2>&1; then
+  echo "💿 Installing zsh-syntax-highlighting (https://github.com/zsh-users/zsh-syntax-highlighting)..."
+  brew install zsh-syntax-highlighting && echo "✅ zsh-syntax-highlighting installed" || exit 1
+else
+  echo "⏭️  zsh-syntax-highlighting already installed!"
+fi
+
+echo
 
 if [ ! -d ~/powerlevel10k ]; then
   echo "💿 Installing powerlevel10k (https://github.com/romkatv/powerlevel10k)..."
@@ -72,6 +81,8 @@ if [ ! -d ~/powerlevel10k ]; then
 else
   echo "⏭️  powerlevel10k already installed!"
 fi
+
+echo "✨ Zsh setup complete!"
 
 echo "⚡️ Reloading ~/.zshrc just in case..."
 

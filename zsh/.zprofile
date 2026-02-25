@@ -147,3 +147,21 @@ gen_password() {
 
   echo "$password"
 }
+
+# Golang
+if which go &> /dev/null; then
+  alias air=$(go env GOPATH)/bin/air
+  alias arelo=$(go env GOPATH)/bin/arelo
+fi
+
+
+# Suffix aliases
+alias -s md='$EDITOR'
+alias -s json='jless'
+
+# Global aliases
+alias -g NE='2>/dev/null'
+alias -g DN='> /dev/null'
+alias -g NUL='>/dev/null 2>&1'
+
+alias -g C='| pbcopy'

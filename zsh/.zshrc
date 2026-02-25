@@ -54,12 +54,6 @@ if [[ ! -z "$enterprise_dir" && -f "$HOME"/"$enterprise_dir"/.zshrc ]]; then
 fi
 
 
-# Golang
-if which go &> /dev/null; then
-  alias air=$(go env GOPATH)/bin/air
-  alias arelo=$(go env GOPATH)/bin/arelo
-fi
-
 # While plist logic doesn't work, run it when opening the terminal
 REMAP_KEYS_SCRIPT_PATH="$HOME/.dotfiles/LaunchDaemons/scripts/remapkeys.sh"
 if [[ -f $REMAP_KEYS_SCRIPT_PATH ]]; then
@@ -79,7 +73,19 @@ export PATH=$N_PREFIX/bin:$HOME/.local/bin:$(brew --prefix)/bin:$PATH
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Auto-load .nvmrc
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 source ~/powerlevel10k/powerlevel10k.zsh-theme
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
