@@ -84,8 +84,6 @@ fi
 
 echo "✨ Zsh setup complete!"
 
-echo "⚡️ Reloading ~/.zshrc just in case..."
-
-source "$HOME"/.zshrc
+echo "⚡️ Run \`source ~/.zshrc\` to update the config."
 
 echo
