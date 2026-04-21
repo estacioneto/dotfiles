@@ -63,19 +63,13 @@ fi
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-if [[ -d ~/$HOME/.n ]]; then
-  mkdir $HOME/.n
-fi
-
-export N_PREFIX=$HOME/.n
-export PATH=$N_PREFIX/bin:$HOME/.local/bin:$(brew --prefix)/bin:$PATH
+export PATH=$HOME/.local/bin:$(brew --prefix)/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Auto-load .nvmrc
-autoload -U add-zsh-hook
 load-nvmrc() {
   if [[ -f .nvmrc && -r .nvmrc ]]; then
     nvm use
@@ -86,6 +80,7 @@ load-nvmrc
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

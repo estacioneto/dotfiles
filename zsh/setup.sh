@@ -53,12 +53,20 @@ echo
 
 echo
 
-# Install bat for file previewing
 if ! brew list bat > /dev/null 2>&1; then
   echo "💿 Installing bat (https://github.com/sharkdp/bat)..."
   brew install bat && echo "✅ bat installed" || exit 1
 else
   echo "⏭️  bat already installed!"
+fi
+
+echo
+
+if ! brew list zoxide > /dev/null 2>&1; then
+  echo "💿 Installing zoxide (https://github.com/ajeetdsouza/zoxide)..."
+  brew install zoxide && echo "✅ zoxide installed" || exit 1
+else
+  echo "⏭️  zoxide already installed!"
 fi
 
 echo

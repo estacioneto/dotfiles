@@ -1,3 +1,9 @@
+FPATH="/usr/share/zsh/5.9/functions:$FPATH"
+autoload -Uz is-at-least
+autoload -Uz add-zsh-hook
+autoload -Uz vcs_info
+autoload -Uz compinit
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if which fzf &> /dev/null; then
