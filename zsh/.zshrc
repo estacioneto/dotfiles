@@ -84,3 +84,7 @@ eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Come on, gh...
+export DO_NOT_TRACK=true
+export GH_TELEMETRY=false

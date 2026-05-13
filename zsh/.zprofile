@@ -171,3 +171,63 @@ alias -g DN='> /dev/null'
 alias -g NUL='>/dev/null 2>&1'
 
 alias -g C='| pbcopy'
+
+# Search for processes listening on ports using fzf
+whos_knocking () {
+  local header="PID|USER|COMMAND|TYPE|PORT|PROTOCOL"
+  local results
+
+  results=$(lsof +c 0 -iTCP -sTCP:LISTEN -P -n 2>/dev/null | tail -n +2 | awk '{
+    split($9, addr, ":");
+    port = addr[length(addr)];
+    printf "%s|%s|%s|%s|%s|%s\n", $2, $3, $1, $5, port, $8
+  }' | sort -t'|' -k5 -n | uniq)
+
+  if [[ -z "$results" ]]; then
+    echo "🚨 No listening ports found"
+    return
+  fi
+
+  local selected
+  selected=$(echo "$header\n$results" \
+    | column -t -s '|' \
+    | run_fzf \
+        --tmux=80% \
+        --header-lines=1 \
+        --header='─── alt-x: kill process │ enter: show details ───────────────────────────────────────────────────────' \
+        --bind='alt-x:become(echo KILL:{1})' \
+        --preview='
+          pid=$(echo {} | awk "{print \$1}");
+          echo "━━━ Process Details ━━━";
+          ps -p "$pid" -o pid,ppid,%cpu,%mem,start,etime,command 2>/dev/null;
+          echo "";
+          echo "━━━ All Ports for PID $pid ━━━";
+          lsof -iTCP -sTCP:LISTEN -P -n -p "$pid" 2>/dev/null | tail -n +2
+        ' --preview-window=down,50%)
+
+  if [[ -z "$selected" ]]; then
+    return
+  fi
+
+  local pid
+
+  if [[ "$selected" == KILL:* ]]; then
+    pid="${selected#KILL:}"
+    echo "Killing PID $pid..."
+    kill -9 "$pid" && echo "✅ Process $pid killed" || echo "🚨 Failed to kill process $pid"
+    return
+  fi
+
+  pid=$(echo "$selected" | awk '{print $1}')
+
+  echo "PID: $pid"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  ps -p "$pid" -o pid,ppid,%cpu,%mem,start,etime,command
+}
+
+alias wk='whos_knocking'
+
+# Run an npm command across all nvm-installed node versions
+nvm-all() {
+  ~/.dotfiles/utils/nvm-all.sh "$@"
+}
