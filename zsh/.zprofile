@@ -231,3 +231,5 @@ alias wk='whos_knocking'
 nvm-all() {
   ~/.dotfiles/utils/nvm-all.sh "$@"
 }
+
+export OLLAMA_KEEP_ALIVE=-1
