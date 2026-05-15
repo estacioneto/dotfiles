@@ -80,7 +80,10 @@ load-nvmrc
 
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-eval "$(zoxide init zsh)"
+
+if ! which z &> /dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
