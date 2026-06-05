@@ -201,6 +201,9 @@ whos_knocking () {
           echo "━━━ Process Details ━━━";
           ps -p "$pid" -o pid,ppid,%cpu,%mem,start,etime,command 2>/dev/null;
           echo "";
+          echo "━━━ Working Directory ━━━";
+          lsof -a -d cwd -p "$pid" -Fn 2>/dev/null | awk "/^n/{print substr(\$0,2); exit}";
+          echo "";
           echo "━━━ All Ports for PID $pid ━━━";
           lsof -iTCP -sTCP:LISTEN -P -n -p "$pid" 2>/dev/null | tail -n +2
         ' --preview-window=down,50%)
@@ -223,6 +226,9 @@ whos_knocking () {
   echo "PID: $pid"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
   ps -p "$pid" -o pid,ppid,%cpu,%mem,start,etime,command
+  local cwd
+  cwd=$(lsof -a -d cwd -p "$pid" -Fn 2>/dev/null | awk '/^n/{print substr($0,2); exit}')
+  echo "CWD: ${cwd:-unknown}"
 }
 
 alias wk='whos_knocking'
